@@ -60,7 +60,10 @@ jobs:
           df -h
       - name: Free Space - Remove docker images
         run: |
-          docker rmi $(docker image ls -aq)
+          IMAGES=$(docker image ls -aq)
+          if [ -n "$IMAGES" ]; then
+            docker rmi $IMAGES
+          fi
           df -h
       - name: Check out the repo
         uses: actions/checkout@v4
